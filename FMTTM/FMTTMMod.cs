@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BepInEx;
 
 namespace FMTTM
@@ -11,12 +10,14 @@ namespace FMTTM
         {
             PlayerHooks.SetHooks();
             MusicHooks.SetHooks();
+            SoundHooks.SetHooks();
         }
 
         void OnDisable()
         {
             PlayerHooks.ClearHooks();
             MusicHooks.ClearHooks();
+            SoundHooks.ClearHooks();
         }
 
         // dict of players to whether they are singing or not

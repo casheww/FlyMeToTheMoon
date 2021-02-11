@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace FMTTM
 {
     class MusicHooks
@@ -17,6 +16,7 @@ namespace FMTTM
         static void MusicPlayer_Update(On.Music.MusicPlayer.orig_Update orig, Music.MusicPlayer self)
         {
             orig(self);
+            if (self.song is null) return;
 
             if (FMTTMMod.CheckAnyPlayerSinging())
             {
