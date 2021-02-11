@@ -51,10 +51,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExt_SoundID.cs" />
     <Compile Include="FMTTMMod.cs" />
     <Compile Include="MusicHooks.cs" />
     <Compile Include="PlayerHooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SoundResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoundResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SoundHooks.cs" />
+    <Compile Include="WAV.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SoundResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SoundResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\test.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
