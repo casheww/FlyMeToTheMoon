@@ -3,7 +3,7 @@ using BepInEx;
 
 namespace FMTTM
 {
-    [BepInPlugin("io.github.casheww.fmttm", "FlyMeToTheMoon", "0.1.0")]
+    [BepInPlugin("casheww.fmttm", "FlyMeToTheMoon", "0.1.0")]
     public class FMTTMMod : BaseUnityPlugin
     {
         void OnEnable()

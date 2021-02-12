@@ -42,10 +42,8 @@ namespace FMTTM
 
         static AudioClip SoundLoader_GetAudioClip(On.SoundLoader.orig_GetAudioClip orig, SoundLoader self, int i)
         {
-            Debug.Log($"aaaa : {i}");
             if (fmttmAudioIndexes.Contains(i))
             {
-                Debug.Log("a");
                 WAV wav = new WAV(GetWavData(i));
                 AudioClip audioClip = AudioClip.Create("testsound", wav.SampleCount, wav.ChannelCount,
                         wav.Frequency, false, false);
