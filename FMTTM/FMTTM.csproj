@@ -74,4 +74,7 @@
     <None Include="Resources\test.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y $(TargetPath) "D:\Games\Steam\steamapps\common\Rain World\Mods"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
