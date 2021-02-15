@@ -8,6 +8,8 @@ namespace FMTTM
     {
         void OnEnable()
         {
+            NewSounds.Setup();
+
             PlayerHooks.SetHooks();
             MusicHooks.SetHooks();
             SoundHooks.SetHooks();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace FMTTM
@@ -25,10 +24,17 @@ namespace FMTTM
 
             if (Input.GetKey(KeyCode.C))
             {
-                if (FMTTMMod.choir[self] != true)
+                if (!FMTTMMod.choir[self])
                 {
+                    // player isn't already singing, so start player singing
                     FMTTMMod.choir[self] = true;
-                    playerVoices[self] = self.room.PlaySound(EnumExt_SoundID.SlugcatSing, self.firstChunk);
+                    playerVoices[self] = self.room.PlaySound(EnumExt_SoundID.SlugcatSingA, self.firstChunk);
+                    playerVoices[self].requireActiveUpkeep = true;      // .alive must be set true every update to prevent object destruction
+                }
+                else
+                {
+                    playerVoices[self].alive = true;        // .alive set to true to prevent object destruction
+                    // player must essentially keep holding C and be able to meet requirements of CanSing to keep singing
                 }
             }
             else
@@ -39,7 +45,7 @@ namespace FMTTM
 
         static bool CanSing(bool consious, Player.InputPackage input)
         {
-            /* sluggy should only be able to sing if consious and not moving or eating */
+            // sluggy should only be able to sing if consious and not moving or eating
             return consious && !input.pckp && input.x == 0 && input.y == 0 && !input.jmp;
         }
 

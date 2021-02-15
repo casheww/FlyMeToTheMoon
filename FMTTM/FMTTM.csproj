@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumExt_SoundID.cs" />
+    <Compile Include="NewSounds.cs" />
     <Compile Include="FMTTMMod.cs" />
     <Compile Include="MusicHooks.cs" />
     <Compile Include="PlayerHooks.cs" />

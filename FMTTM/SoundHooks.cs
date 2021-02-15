@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using UnityEngine;
 using CustomWAV;
 
@@ -24,7 +24,7 @@ namespace FMTTM
                 VirtualMicrophone self, SoundID soundID, PositionedSoundEmitter controller, bool loop, float vol,
                 float pitch, bool randomStartPosition)
         {
-            if (soundID == EnumExt_SoundID.SlugcatSing)
+            if (NewSounds.SoundNames.Contains(soundID.ToString()))
             {
                 SoundLoader.SoundData soundData = GetSlugcatSingSound(soundID);
                 self.soundObjects.Add(new VirtualMicrophone.ObjectSound(self, soundData, loop, controller, vol, pitch, randomStartPosition));
@@ -37,15 +37,16 @@ namespace FMTTM
 
         static SoundLoader.SoundData GetSlugcatSingSound(SoundID soundID)
         {
-            return new SoundLoader.SoundData(soundID, 41919, 1, 1, 1, 1);
+            int audioClip = NewSounds.FmttmAudio.Keys.ToArray()[random.Next(NewSounds.FmttmAudio.Count)];
+            return new SoundLoader.SoundData(soundID, audioClip, 0.4f, 1, 1, 1);
         }
 
         static AudioClip SoundLoader_GetAudioClip(On.SoundLoader.orig_GetAudioClip orig, SoundLoader self, int i)
         {
-            if (fmttmAudioIndexes.Contains(i))
+            if (NewSounds.FmttmAudio.ContainsKey(i))
             {
                 WAV wav = new WAV(GetWavData(i));
-                AudioClip audioClip = AudioClip.Create("testsound", wav.SampleCount, wav.ChannelCount,
+                AudioClip audioClip = AudioClip.Create(NewSounds.FmttmAudio[i].ToString(), wav.SampleCount, wav.ChannelCount,
                         wav.Frequency, false, false);
                 audioClip.SetData(wav.LeftChannel, 0);
                 return audioClip;
@@ -56,24 +57,27 @@ namespace FMTTM
             }
         }
 
+        /// <summary>
+        /// Gets the embedded WAV data corresponding to the audioClip number given 
+        /// based on NewSounds.FmttmAudio
+        /// </summary>
+        /// <param name="i">audio clip number</param>
+        /// <returns>byte array representing the WAV data</returns>
         static byte[] GetWavData(int i)
         {
-            switch (i)
+            Debug.Log(i);
+            string wavName = NewSounds.FmttmAudio[i].ToString();
+
+            UnmanagedMemoryStream stream = SoundResources.ResourceManager.GetStream(wavName);
+
+            byte[] bytes = new byte[stream.Length];
+            for (int j = 0; j < stream.Length; j++)
             {
-                default:
-                case 41919:
-                    UnmanagedMemoryStream stream = SoundResources.test;
-                    byte[] bytes = new byte[stream.Length];
-                    for (int j = 0; j < stream.Length; j++)
-                    {
-                        bytes[j] = (byte)stream.ReadByte();
-                    }
-                    return bytes;
+                bytes[j] = (byte)stream.ReadByte();
             }
+            return bytes;
         }
 
-        // hopefully safe placeholder audio values
-        public static List<int> fmttmAudioIndexes = new List<int> { 41919, 41920, 41921 };
-
+        static readonly System.Random random = new System.Random();
     }
 }
