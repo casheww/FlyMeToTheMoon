@@ -1,5 +1,4 @@
-﻿using System;
-using OptionalUI;
+﻿using OptionalUI;
 using UnityEngine;
 
 namespace FMTTM
@@ -10,11 +9,12 @@ namespace FMTTM
 
         public override void Initialize()
         {
+            // hopefully all of the 'magic numbers' can be forgiven
             base.Initialize();
             Tabs = new OpTab[1];
             Tabs[0] = new OpTab("FMTTM");
 
-            // metadata
+            // metadata start
             string modName = FMTTMMod.Instance.Info.Metadata.Name;
             string modVrsn = FMTTMMod.Instance.Info.Metadata.Version.ToString();
             string modAuth = FMTTMMod.Instance.Info.Metadata.GUID.Split('.')[0];
@@ -28,12 +28,12 @@ namespace FMTTM
             });
             // metadata end
 
-            // player control config
-            Vector2 rectSize = new Vector2(245, 125);
+            // player control config start
+            Vector2 rectSize = new Vector2(245, 59);
             int[,] controlConfigBoxCoords = new int[,]
             {
-                { 50, 365 }, { 305, 365 },
-                { 50, 230 }, { 305, 230 }
+                { 50, 400 }, { 305, 400 },
+                { 50, 330 }, { 305, 330 }
             };
             
             for (int i = 0; i < controlConfigBoxCoords.GetLength(0); i++)
@@ -43,12 +43,16 @@ namespace FMTTM
 
                 OpRect rect = new OpRect(bl, rectSize);
                 OpLabel label = new OpLabel(
-                    new Vector2(bl.x + 6, bl.y + 60),
+                    new Vector2(bl.x + 5, bl.y + 20),
                     new Vector2(100, 15), $"Player {i + 1}");
 
-                // TODO: add key selector elements
+                string keyCodeString = (i == 0) ? KeyCode.C.ToString() : KeyCode.None.ToString();
+                OpKeyBinder keyBinder = new OpKeyBinder(
+                    new Vector2(bl.x + 98, bl.y + 7),
+                    new Vector2(140, 45), modID: FMTTMMod.Instance.Info.Metadata.GUID, $"player{i + 1}_key",
+                    keyCodeString, false, OpKeyBinder.BindController.AnyController);
 
-                Tabs[0].AddItems(new UIelement[] { rect, label });
+                Tabs[0].AddItems(new UIelement[] { rect, label, keyBinder });
             }
             // player control config end
         }
