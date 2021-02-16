@@ -1,4 +1,5 @@
-﻿using OptionalUI;
+﻿using System;
+using OptionalUI;
 using UnityEngine;
 
 namespace FMTTM
@@ -10,10 +11,12 @@ namespace FMTTM
         public override void Initialize()
         {
             // hopefully all of the 'magic numbers' can be forgiven
+            songKeyBindings = new KeyCode[4];
+
             base.Initialize();
             Tabs = new OpTab[1];
             Tabs[0] = new OpTab("FMTTM");
-
+            
             // metadata start
             string modName = FMTTMMod.Instance.Info.Metadata.Name;
             string modVrsn = FMTTMMod.Instance.Info.Metadata.Version.ToString();
@@ -65,9 +68,13 @@ namespace FMTTM
         public override void ConfigOnChange()
         {
             base.ConfigOnChange();
-            // TODO: key selection logic
+            
+            for (int i = 0; i < 4; i++)
+            {
+                songKeyBindings[i] = (KeyCode)Enum.Parse(typeof(KeyCode), config[$"player{i + 1}_key"]);
+            }
         }
 
-        public static KeyCode[] keyBindings { get; private set; }
+        public static KeyCode[] songKeyBindings { get; private set; }
     }
 }
