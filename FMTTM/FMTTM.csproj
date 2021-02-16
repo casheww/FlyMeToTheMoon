@@ -37,6 +37,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Rain World\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="ConfigMachine">
+      <HintPath>..\..\..\..\Games\Steam\steamapps\common\Rain World\BepInEx\plugins\ConfigMachine.dll</HintPath>
+    </Reference>
     <Reference Include="HOOKS-Assembly-CSharp">
       <HintPath>..\..\safe\HOOKS-Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -51,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="EnumExt_SoundID.cs" />
     <Compile Include="NewSounds.cs" />
     <Compile Include="FMTTMMod.cs" />

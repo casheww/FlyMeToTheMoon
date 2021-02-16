@@ -6,8 +6,11 @@ namespace FMTTM
     [BepInPlugin("casheww.fmttm", "FlyMeToTheMoon", "0.1.0")]
     public class FMTTMMod : BaseUnityPlugin
     {
+        public static FMTTMMod Instance { get; private set; }
+
         void OnEnable()
         {
+            Instance = this;
             NewSounds.Setup();
 
             PlayerHooks.SetHooks();
@@ -21,6 +24,8 @@ namespace FMTTM
             MusicHooks.ClearHooks();
             SoundHooks.ClearHooks();
         }
+
+        public static OptionalUI.OptionInterface LoadOI() => new Config();
 
         // dict of players to whether they are singing or not
         public static Dictionary<Player, bool> choir = new Dictionary<Player, bool>();
